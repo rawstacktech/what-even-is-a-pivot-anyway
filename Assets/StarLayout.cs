@@ -4,11 +4,11 @@ using UnityEngine.UI;
 public class StarLayout : MonoBehaviour, ILayoutGroup
 {
     [Header("Star Layout")]
-    [SerializeField] private StarLayoutElement _layoutElementTopLeft;
-    [SerializeField] private StarLayoutElement _layoutElementTopRight;
-    [SerializeField] private StarLayoutElement _layoutElementMiddle;
-    [SerializeField] private StarLayoutElement _layoutElementBottomLeft;
-    [SerializeField] private StarLayoutElement _layoutElementBottomRight;
+    [SerializeField] private LayoutElement _layoutElementTopLeft;
+    [SerializeField] private LayoutElement _layoutElementTopRight;
+    [SerializeField] private LayoutElement _layoutElementMiddle;
+    [SerializeField] private LayoutElement _layoutElementBottomLeft;
+    [SerializeField] private LayoutElement _layoutElementBottomRight;
 
     public void SetLayoutHorizontal()
     {
@@ -24,32 +24,33 @@ public class StarLayout : MonoBehaviour, ILayoutGroup
         SetElementSize(_layoutElementBottomRight);
     }
 
-    private void SetElementSize(StarLayoutElement element)
+    private void SetElementSize(LayoutElement element)
     {
-        element.SetSize(element.preferredWidth, element.preferredHeight);
+        element.GetComponent<RectTransform>().sizeDelta =
+            new Vector2(element.preferredWidth, element.preferredHeight);
     }
 
     public void SetLayoutVertical()
     {
         SetSizes();
 
-        _layoutElementTopLeft.SetBottomLeftPosition(
+        _layoutElementTopLeft.GetComponent<RectTransform>().SetPosition(
             0,
             RectTransform.rect.height - _layoutElementTopLeft.preferredHeight);
 
-        _layoutElementTopRight.SetBottomLeftPosition(
+        _layoutElementTopRight.GetComponent<RectTransform>().SetPosition(
             RectTransform.rect.width - _layoutElementTopRight.preferredWidth,
             RectTransform.rect.height - _layoutElementTopRight.preferredHeight);
 
-        _layoutElementMiddle.SetBottomLeftPosition(
+        _layoutElementMiddle.GetComponent<RectTransform>().SetPosition(
             RectTransform.rect.width / 2 - _layoutElementMiddle.preferredWidth / 2,
             RectTransform.rect.height / 2 - _layoutElementMiddle.preferredHeight / 2);
 
-        _layoutElementBottomLeft.SetBottomLeftPosition(
+        _layoutElementBottomLeft.GetComponent<RectTransform>().SetPosition(
             0,
             0);
 
-        _layoutElementBottomRight.SetBottomLeftPosition(
+        _layoutElementBottomRight.GetComponent<RectTransform>().SetPosition(
             RectTransform.rect.width - _layoutElementBottomRight.preferredWidth,
             0);
     }
